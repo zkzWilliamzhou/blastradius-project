@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "name": "local-dev",
+  "description": "本地开发机：只拦不可逆的，其余放行",
+  "default": "auto",
+  "score_ask": 40,
+  "score_deny": 80,
+  "rules": [
+    {
+      "action": "deny",
+      "capability": "fs.device_write"
+    },
+    {
+      "action": "deny",
+      "rule": "BR001"
+    },
+    {
+      "action": "deny",
+      "capability": "net.remote_exec"
+    }
+  ]
+}

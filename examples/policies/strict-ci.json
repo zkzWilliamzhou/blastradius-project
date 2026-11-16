@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "name": "ci-unattended",
+  "description": "无人值守 CI：任何写盘/出网/设备操作都要人工批准，凭据一律拒绝",
+  "default": "auto",
+  "score_ask": 8,
+  "score_deny": 45,
+  "protected": [
+    "**/.env",
+    "**/.env.*",
+    "**/id_rsa",
+    "**/*.pem",
+    "~/.aws/**",
+    "~/.ssh/**"
+  ],
+  "rules": [
+    {
+      "action": "deny",
+      "capability": "fs.device_write",
+      "reason": "CI 不做裸设备写入"
+    },
+    {
+      "action": "deny",
+      "capability": "net.remote_exec",
+      "reason": "禁止取回即执行"
+    },
+    {
+      "action": "deny",
+      "capability": "cred.export",
+      "reason": "禁止导出私钥"
+    },
+    {
+      "action": "deny",
+      "path_glob": [
+        "/etc/**",
+        "/boot/**",
+        "/usr/**"
+      ]
+    },
+    {
+      "action": "ask",
+      "capability": "net.exfil"
+    },
+    {
+      "action": "ask",
+      "capability": "deploy.prod"
+    },
+    {
+      "action": "allow",
+      "program": "rm",
+      "path_glob": [
+        "**/node_modules",
+        "**/dist",
+        "**/.cache",
+        "/tmp/**"
+      ]
+    },
+    {
+      "action": "allow",
+      "program": "pip",
+      "text": "install --user"
+    }
+  ]
+}

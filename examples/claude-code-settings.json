@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "br guard --policy ~/.config/br/policy.json"
+          }
+        ]
+      }
+    ]
+  }
+}
